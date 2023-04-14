@@ -8,6 +8,36 @@ div.chat-content {
   margin-bottom: 2rem;
 }
 
+div.menu {
+
+  border-radius: .25rem;
+  text-align: center;
+}
+
+.chat-list {
+  border-radius: .25rem;
+  border: 1px solid #ced4da;
+  height: auto;
+  width: auto;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.username{
+  border-radius: .25rem;
+  border: 1px solid #ced4da;
+  height: auto;
+  width: auto;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+li{
+ list-style-type: none;
+}
+
 .card {
   height: 100%;
 }
