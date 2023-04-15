@@ -1,10 +1,10 @@
 .chat {
-  margin-top: 10rem;
+  margin-top: 3rem;
 }
 
 div.chat-content {
   border-radius: .25rem;
-  height: 40rem;
+  height: 30rem;
   margin-bottom: 2rem;
 }
 
@@ -17,11 +17,12 @@ div.menu {
 .chat-list {
   border-radius: .25rem;
   border: 1px solid #ced4da;
-  height: auto;
+  height: 23rem;
   width: auto;
   align-items: center;
   margin-right: auto;
   margin-left: auto;
+  overflow-y: scroll;
 }
 
 .username{
@@ -40,4 +41,5 @@ li{
 
 .card {
   height: 100%;
+  overflow-y: scroll;
 }

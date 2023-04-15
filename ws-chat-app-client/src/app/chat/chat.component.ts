@@ -9,7 +9,7 @@ import { WebSocketService } from '../services/web-socket.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy{
 
   constructor(public webSocketService: WebSocketService) {
   }
