@@ -10,7 +10,6 @@ export class WebSocketService {
 
   chatMessages: ChatMessageDto[] = [];
 
-
   constructor() {
   }
 

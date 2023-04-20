@@ -1,5 +1,8 @@
 package com.my.wschatapp.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.wschatapp.dto.User;
+import com.my.wschatapp.dto.UserConnectionDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
@@ -14,6 +17,8 @@ import java.util.List;
 public class ChatWebSocketHandler extends TextWebSocketHandler{
 
     private final List<WebSocketSession> webSocketSessions = new ArrayList<>();
+    
+    private final List<UserConnectionDto> users = new ArrayList<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -24,6 +29,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         for (WebSocketSession webSocketSession : webSocketSessions) {
             webSocketSession.sendMessage(message);
+            users.add(new ObjectMapper().readValue(message.getPayload().toString(), UserConnectionDto.class));
+            System.out.println(new ObjectMapper().readValue(message.getPayload().toString(), UserConnectionDto.class));
         }
     }
 

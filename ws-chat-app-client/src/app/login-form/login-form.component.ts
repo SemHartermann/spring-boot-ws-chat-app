@@ -1,29 +1,28 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {WebSocketService} from "../services/web-socket.service";
 import {ChatMessageDto} from "../models/chatMessageDto";
+import { UserConnectionDto } from '../models/userConnectionDto';
 
 @Component({
   selector: 'cf-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit, OnDestroy{
-  constructor(public webSocketService: WebSocketService) {
+export class LoginFormComponent implements OnInit{
+
+  public static userConnectionDto: UserConnectionDto;
+
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.webSocketService.openWebSocket();
   }
 
-  ngOnDestroy(): void {
-    this.webSocketService.closeWebSocket();
+  enterName(nameInput: HTMLInputElement){
+    console.log('nameInput.value', nameInput.value)
+    LoginFormComponent.userConnectionDto = new UserConnectionDto(nameInput.value);
   }
 
-  sendConnection(sendForm: NgForm) {
-    const chatMessageDto = new ChatMessageDto(sendForm.value.user);
-    this.webSocketService.sendMessage(chatMessageDto);
-    // @ts-ignore
-    sendForm.controls.message.reset();
-  }
+
 }

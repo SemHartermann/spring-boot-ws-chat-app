@@ -15,8 +15,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     private final String CHAT_ENDPOINT = "/chat";
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(getChatWebSocketHandler(), CHAT_ENDPOINT)
-                .setAllowedOrigins("*");
+        registry.addHandler(getChatWebSocketHandler(), CHAT_ENDPOINT).withSockJS();
     }
 
     @Bean
@@ -25,6 +24,22 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     }
 
 }
+
+/*@Configuration
+@EnableWebSocketMessageBroker
+public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/socket")
+                .setAllowedOrigins("*")
+                .withSockJS();
+    }
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.setApplicationDestinationPrefixes("/app")
+                .enableSimpleBroker("/message");
+    }
+}*/
 
 
 

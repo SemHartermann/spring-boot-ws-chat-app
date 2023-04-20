@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExample04">
+    <div class="collapse navbar-collapse" ip="navbarsExample04">
       <ul class="navbar-nav mr-auto">
       </ul>
     </div>
@@ -24,22 +24,20 @@
       </div>
       <div class="menu col">
         <div class="row-cols-1">User name</div>
-        <div class="row-cols-1 username">Test</div>
+        <div class="row-cols-1 username">
+            {{userConnection.user}}
+          </div>
         <div class="row-cols-1" style="margin-top: 40px">chat-list</div>
-        <div class="row-cols-1 chat-list" id="window">
+        <div class="row-cols-1 chat-list" ip="window">
           <ul class="list-group">
-
-        </ul>
+          </ul>
         </div>
       </div>
     </div>
     <form (ngSubmit)="sendMessage(sendForm)" #sendForm="ngForm">
       <div class="chat-send row">
-        <div class="col-2">
-          <input type="text" class="form-control" name="user" id="input-user" ngModel>
-        </div>
-        <div class="col-8">
-          <input type="text" class="form-control" name="message" id="input-message" ngModel>
+        <div class="col-9">
+          <input type="text" class="form-control" name="message" ip="input-message" ngModel>
         </div>
         <div class="col-2">
           <button type="submit" class="btn btn-primary">Send</button>

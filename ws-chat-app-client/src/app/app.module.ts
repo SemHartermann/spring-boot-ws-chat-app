@@ -12,6 +12,7 @@ const appRoutes: Routes = [
   {path: '', component: LoginFormComponent}
 ]
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,4 +27,5 @@ const appRoutes: Routes = [
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
