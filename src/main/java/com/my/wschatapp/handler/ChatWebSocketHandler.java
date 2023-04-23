@@ -13,7 +13,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+/*@Component
 public class ChatWebSocketHandler extends TextWebSocketHandler{
 
     private final List<WebSocketSession> webSocketSessions = new ArrayList<>();
@@ -29,8 +29,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         for (WebSocketSession webSocketSession : webSocketSessions) {
             webSocketSession.sendMessage(message);
-            users.add(new ObjectMapper().readValue(message.getPayload().toString(), UserConnectionDto.class));
-            System.out.println(new ObjectMapper().readValue(message.getPayload().toString(), UserConnectionDto.class));
         }
     }
 
@@ -38,4 +36,4 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         webSocketSessions.remove(session);
     }
-}
+}*/

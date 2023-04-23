@@ -4,6 +4,7 @@ import { ChatMessageDto } from '../models/chatMessageDto';
 import { WebSocketService } from '../services/web-socket.service';
 import {UserConnectionDto} from "../models/userConnectionDto";
 import {LoginFormComponent} from "../login-form/login-form.component";
+import {MessageService} from "../services/message.service";
 
 
 @Component({
@@ -15,22 +16,22 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   userConnection: UserConnectionDto;
 
-  constructor(public webSocketService: WebSocketService) {
+  constructor(public messageService: MessageService) {
   }
 
   ngOnInit(): void {
     this.userConnection = new UserConnectionDto(LoginFormComponent.userConnectionDto.user);
-    this.webSocketService.openWebSocket();
+
     console.log(this.userConnection);
   }
 
   ngOnDestroy(): void {
-    this.webSocketService.closeWebSocket();
+
   }
 
   sendMessage(sendForm: NgForm) {
     const chatMessageDto = new ChatMessageDto(this.userConnection.user, sendForm.value.message);
-    this.webSocketService.sendMessage(chatMessageDto);
+    this.messageService.sendMessage(sendForm.value.message);
     // @ts-ignore
     sendForm.controls.message.reset();
   };
