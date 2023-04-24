@@ -1,25 +1,30 @@
 package com.my.wschatapp.dto;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class User {
 
-    private Map<String, ChatMessageDto> user = new HashMap<>();
+    private String name;
 
-    public Map<String, ChatMessageDto> getUser() {
-        return user;
+    public User() {
     }
 
-    public void setUser(Map<String, ChatMessageDto> user) {
-        this.user = user;
+    public User(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "user=" + user +
+                "name='" + name + '\'' +
                 '}';
     }
-
 }

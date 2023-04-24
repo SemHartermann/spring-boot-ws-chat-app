@@ -2,7 +2,8 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {NgForm} from "@angular/forms";
 import {WebSocketService} from "../services/web-socket.service";
 import {ChatMessageDto} from "../models/chatMessageDto";
-import { UserConnectionDto } from '../models/userConnectionDto';
+import { UserDto } from '../models/userDto';
+import {MessageService} from "../services/message.service";
 
 @Component({
   selector: 'cf-login-form',
@@ -11,9 +12,9 @@ import { UserConnectionDto } from '../models/userConnectionDto';
 })
 export class LoginFormComponent implements OnInit{
 
-  public static userConnectionDto: UserConnectionDto;
+  public static userConnectionDto: UserDto;
 
-  constructor() {
+  constructor(public messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -21,8 +22,8 @@ export class LoginFormComponent implements OnInit{
 
   enterName(nameInput: HTMLInputElement){
     console.log('nameInput.value', nameInput.value)
-    LoginFormComponent.userConnectionDto = new UserConnectionDto(nameInput.value);
+    LoginFormComponent.userConnectionDto = new UserDto(nameInput.value);
+    this.messageService.sendUser(LoginFormComponent.userConnectionDto)
   }
-
 
 }
