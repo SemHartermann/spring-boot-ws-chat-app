@@ -8,12 +8,12 @@ export class ChatMessageDto {
 
     this.user = user;
 
-    if(recipient){
-      this.recipient = recipient;
-    }
-
     if (message){
       this.message = message;
+    }
+
+    if(recipient){
+      this.recipient = recipient;
     }
 
   }

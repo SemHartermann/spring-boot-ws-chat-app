@@ -1,11 +1,15 @@
 package com.my.wschatapp.dto;
 
-public class UserConnectionDto {
+public class ChatMessageDto {
 
     private String user;
 
     private String message;
 
+    public ChatMessageDto(String user, String message) {
+        this.user = user;
+        this.message = message;
+    }
 
     public String getUser() {
         return user;
@@ -25,7 +29,7 @@ public class UserConnectionDto {
 
     @Override
     public String toString() {
-        return "UserConnectionDto{" +
+        return "ChatMessageDto{" +
                 "user='" + user + '\'' +
                 ", message='" + message + '\'' +
                 '}';

@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class User {
 
-    private Map<String, UserConnectionDto> user = new HashMap<>();
+    private Map<String, ChatMessageDto> user = new HashMap<>();
 
-    public Map<String, UserConnectionDto> getUser() {
+    public Map<String, ChatMessageDto> getUser() {
         return user;
     }
 
-    public void setUser(Map<String, UserConnectionDto> user) {
+    public void setUser(Map<String, ChatMessageDto> user) {
         this.user = user;
     }
 
