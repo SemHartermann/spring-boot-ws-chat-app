@@ -1,7 +1,7 @@
 export class ChatMessageDto {
   user: string;
   message: string;
-  recipient: string;
+  receiver: string;
 
   constructor(user: string, message?: string, recipient?: string) {
 
@@ -12,7 +12,7 @@ export class ChatMessageDto {
     }
 
     if(recipient){
-      this.recipient = recipient;
+      this.receiver = recipient;
     }
 
   }

@@ -41,6 +41,13 @@ export class MessageService {
         }
       });
 
+      this.stompClient.subscribe('/topic/chat', (chat: { body: any; }) => {
+        if (chat.body) {
+          this.chatMessages = (JSON.parse(chat.body));
+          console.log(this.users);
+        }
+      });
+
     });
   }
 
@@ -50,5 +57,10 @@ export class MessageService {
 
   sendUser(user : UserDto) {
     this.stompClient.send('/app/send/user' , {}, JSON.stringify(user));
+  }
+
+  sendUsersChat(usersMap : string[]) {
+    console.log(JSON.parse(JSON.stringify(usersMap)))
+    this.stompClient.send('/app/send/chat' , {}, JSON.stringify(usersMap));
   }
 }

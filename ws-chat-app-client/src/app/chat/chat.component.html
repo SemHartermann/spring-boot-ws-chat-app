@@ -31,7 +31,7 @@
         <div class="row-cols-1 chat-list" ip="window">
           <ul class="list-group">
             <li class="list-group-item" *ngFor="let user of messageService.users">
-              <span>{{user.name}}</span>
+              <span (click)="enterReceiver(user)">{{user.name}}</span>
             </li>
           </ul>
         </div>

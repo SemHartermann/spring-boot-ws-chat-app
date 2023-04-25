@@ -16,6 +16,8 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   userConnection: UserDto;
 
+  receiver: UserDto;
+
   constructor(public messageService: MessageService) {
   }
 
@@ -30,11 +32,19 @@ export class ChatComponent implements OnInit, OnDestroy{
   }
 
   sendMessage(sendForm: NgForm) {
-    const chatMessageDto = new ChatMessageDto(this.userConnection.name, sendForm.value.message);
+    const chatMessageDto = new ChatMessageDto(this.userConnection.name, sendForm.value.message, this.receiver.name);
     this.messageService.sendMessage(chatMessageDto);
     // @ts-ignore
     sendForm.controls.message.reset();
   };
 
+  enterReceiver(user: UserDto){
+    this.receiver = user;
+    let users: string[] = [];
+    users.push(this.userConnection.name);
+    users.push(this.receiver.name);
+    this.messageService.sendUsersChat(users);
+    console.log(this.receiver)
+  }
 
 }

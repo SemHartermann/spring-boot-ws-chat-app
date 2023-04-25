@@ -6,9 +6,20 @@ public class ChatMessageDto {
 
     private String message;
 
-    public ChatMessageDto(String user, String message) {
+    private String receiver;
+
+    public ChatMessageDto(String user, String message, String receiver) {
         this.user = user;
         this.message = message;
+        this.receiver = receiver;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     public String getUser() {
@@ -32,6 +43,7 @@ public class ChatMessageDto {
         return "ChatMessageDto{" +
                 "user='" + user + '\'' +
                 ", message='" + message + '\'' +
+                ", receiver='" + receiver + '\'' +
                 '}';
     }
 }
