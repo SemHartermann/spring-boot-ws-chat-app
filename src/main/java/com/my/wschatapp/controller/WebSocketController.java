@@ -31,37 +31,6 @@ public class WebSocketController {
     @MessageMapping("/send/message")
     @SendTo("/topic/message")
     public ChatMessageDto sendMessage(ChatMessageDto message){
-
-        /*boolean exist = false;
-
-        for (UsersChat chat : chats) {
-            if (chat.getChat().containsKey(new HashMap<>().put(message.getReceiver(), message.getUser()))){
-                chat.getChat().get(new HashMap<>().put(message.getReceiver(), message.getUser()))
-                        .add(message.getMessage());
-                exist = true;
-            } else if (chat.getChat().containsKey(new HashMap<>().put(message.getUser(), message.getReceiver()))) {
-                chat.getChat().get(new HashMap<>().put(message.getUser(), message.getReceiver()))
-                        .add(message.getMessage());
-                exist = true;
-            }
-        }
-
-            if(exist) {
-                UsersChat newChat = new UsersChat();
-
-                newChat.setChat(new HashMap<>());
-
-                Map<String, String> newPair = new HashMap<>();
-                newPair.put(message.getUser(), message.getReceiver());
-
-                List<ChatMessageDto> messages = new ArrayList<>();
-                messages.add(message.getMessage());
-
-                newChat.getChat().put(newPair, messages);
-
-                chats.add(newChat);
-            }*/
-
         chats.add(message);
         System.out.println(message);
         return message;
@@ -88,10 +57,23 @@ public class WebSocketController {
 
     @MessageMapping("/send/user")
     @SendTo("/topic/users")
-    public List<User> sendUser(User user){
-        users.add(user);
+    public List<User> sendUser(User newUser){
+        for (User user : users) {
+            if(user.getName().equals(newUser.getName())){
+                return users;
+            }
+        }
+        users.add(newUser);
         System.out.println(users);
         return users;
     }
+
+    /*@MessageMapping("/send/disconnected")
+    @SendTo("/topic/users")
+    public List<User> sendDisconnected(User user){
+        users.remove(user);
+        System.out.println("User disconnected: " + user);
+        return users;
+    }*/
 
 }

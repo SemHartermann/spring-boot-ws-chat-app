@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LoginFormComponent } from '../login-form/login-form.component';
 import {ChatMessageDto} from "../models/chatMessageDto";
 import {UserDto} from "../models/userDto";
 
@@ -14,6 +15,7 @@ export class MessageService {
   constructor() {
     this.initializeWebSocketConnection();
   }
+
   // @ts-ignore
   stompClient;
 
@@ -27,7 +29,16 @@ export class MessageService {
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
 
+    /*ws.onclose = () => {
+      console.log('close');
+      this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(LoginFormComponent.userConnectionDto));
+      this.stompClient.disconnect(()=>{
+        this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(LoginFormComponent.userConnectionDto));
+      });
+    };*/
+
     this.stompClient.connect({}, (frame: any) => {
+
       this.stompClient.subscribe('/topic/message', (message: { body: any; }) => {
         if (message.body) {
           this.chatMessages.push(JSON.parse(message.body));
@@ -63,4 +74,8 @@ export class MessageService {
     console.log(JSON.parse(JSON.stringify(usersMap)))
     this.stompClient.send('/app/send/chat' , {}, JSON.stringify(usersMap));
   }
+
+  /*sendDisconnected(user : UserDto){
+    this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(user));
+  }*/
 }

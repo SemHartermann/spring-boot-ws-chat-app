@@ -28,7 +28,9 @@ export class ChatComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
+    /*console.log("User disconnected" + this.userConnection);
 
+    this.messageService.sendDisconnected(this.userConnection);*/
   }
 
   sendMessage(sendForm: NgForm) {
