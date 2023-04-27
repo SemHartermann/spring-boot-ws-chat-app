@@ -23,22 +23,15 @@ export class MessageService {
 
   users: UserDto[] = [];
 
+
   initializeWebSocketConnection() {
     const serverUrl = 'http://localhost:8080/chat';
     console.log(serverUrl);
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
 
-    /*ws.onclose = () => {
-      console.log('close');
-      this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(LoginFormComponent.userConnectionDto));
-      this.stompClient.disconnect(()=>{
-        this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(LoginFormComponent.userConnectionDto));
-      });
-    };*/
-
-    this.stompClient.connect({}, (frame: any) => {
-
+    this.stompClient.connect({}, (frame:any) => {
+      console.log(frame);
       this.stompClient.subscribe('/topic/message', (message: { body: any; }) => {
         if (message.body) {
           this.chatMessages.push(JSON.parse(message.body));
@@ -47,15 +40,15 @@ export class MessageService {
 
       this.stompClient.subscribe('/topic/users', (user: { body: any; }) => {
         if (user.body) {
-          this.users = (JSON.parse(user.body));
+          this.users = JSON.parse(user.body);
           console.log(this.users);
         }
       });
 
       this.stompClient.subscribe('/topic/chat', (chat: { body: any; }) => {
         if (chat.body) {
-          this.chatMessages = (JSON.parse(chat.body));
-          console.log(this.users);
+          /*let chatMessagesBuf : ChatMessageDto[] = (JSON.parse(chat.body));*/
+          this.chatMessages = JSON.parse(chat.body);
         }
       });
 
@@ -74,6 +67,19 @@ export class MessageService {
     console.log(JSON.parse(JSON.stringify(usersMap)))
     this.stompClient.send('/app/send/chat' , {}, JSON.stringify(usersMap));
   }
+
+  /*subscribeUsersChat(){
+    this.subscription = this.stompClient.subscribe('/topic/chat', (chat: { body: any; }) => {
+      if (chat.body) {
+        /!*let chatMessagesBuf : ChatMessageDto[] = (JSON.parse(chat.body));*!/
+        this.chatMessages = JSON.parse(chat.body);
+      }
+    });
+  }
+
+  unSubscribeUsersChat(){
+    this.subscription.unsubscribe('/topic/chat');
+  }*/
 
   /*sendDisconnected(user : UserDto){
     this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(user));

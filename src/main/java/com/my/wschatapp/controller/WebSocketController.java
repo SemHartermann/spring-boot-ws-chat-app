@@ -2,30 +2,35 @@ package com.my.wschatapp.controller;
 
 import com.my.wschatapp.dto.ChatMessageDto;
 import com.my.wschatapp.dto.User;
-import com.my.wschatapp.dto.UsersChat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
+import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.config.ChannelRegistration;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.WebSocketMessage;
 
+import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
+
 public class WebSocketController {
 
-    private final SimpMessagingTemplate template;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    private final SimpUserRegistry simpUserRegistry;
 
     private List<User> users = new ArrayList<>();
 
     private List<ChatMessageDto> chats = new ArrayList<>();
 
     @Autowired
-    WebSocketController(SimpMessagingTemplate template){
-        this.template = template;
+    WebSocketController(SimpMessagingTemplate simpMessagingTemplate, SimpUserRegistry simpUserRegistry){
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.simpUserRegistry = simpUserRegistry;
     }
 
     @MessageMapping("/send/message")
@@ -37,10 +42,10 @@ public class WebSocketController {
     }
 
     @MessageMapping("/send/chat")
-    @SendTo("/topic/chat")
-    public List<ChatMessageDto> sendChat(List<String> users){
+    public void sendChat(List<String> users, StompHeaderAccessor headers){
 
         System.out.println(users);
+        System.out.println(headers);
 
         List<ChatMessageDto> currentChat = new ArrayList<>();
 
@@ -52,7 +57,10 @@ public class WebSocketController {
             }
         }
         System.out.println(currentChat);
-        return currentChat;
+        Optional<String> user = Optional.ofNullable(headers.getUser())
+                .map(Principal::getName);
+        System.out.println(user);
+        simpMessagingTemplate.convertAndSendToUser(String.valueOf(user),"/topic/chat", currentChat);
     }
 
     @MessageMapping("/send/user")
@@ -67,13 +75,5 @@ public class WebSocketController {
         System.out.println(users);
         return users;
     }
-
-    /*@MessageMapping("/send/disconnected")
-    @SendTo("/topic/users")
-    public List<User> sendDisconnected(User user){
-        users.remove(user);
-        System.out.println("User disconnected: " + user);
-        return users;
-    }*/
-
 }
+
