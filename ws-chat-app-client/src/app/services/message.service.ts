@@ -45,13 +45,6 @@ export class MessageService {
         }
       });
 
-      this.stompClient.subscribe('/topic/chat', (chat: { body: any; }) => {
-        if (chat.body) {
-          /*let chatMessagesBuf : ChatMessageDto[] = (JSON.parse(chat.body));*/
-          this.chatMessages = JSON.parse(chat.body);
-        }
-      });
-
     });
   }
 
@@ -65,19 +58,19 @@ export class MessageService {
 
   sendUsersChat(usersMap : string[]) {
     console.log(JSON.parse(JSON.stringify(usersMap)))
-    this.stompClient.send('/app/send/chat' , {}, JSON.stringify(usersMap));
+    this.stompClient.send('/app/send/chat' , {username: LoginFormComponent.userConnectionDto.name}, JSON.stringify(usersMap));
   }
 
-  /*subscribeUsersChat(){
-    this.subscription = this.stompClient.subscribe('/topic/chat', (chat: { body: any; }) => {
+  subscribeUsersChat(){
+    this.stompClient.subscribe('/topic/chat'+"-"+LoginFormComponent.userConnectionDto.name, (chat: { body: any; },) => {
       if (chat.body) {
-        /!*let chatMessagesBuf : ChatMessageDto[] = (JSON.parse(chat.body));*!/
+        console.log("in chat handler")
         this.chatMessages = JSON.parse(chat.body);
       }
     });
   }
 
-  unSubscribeUsersChat(){
+ /* unSubscribeUsersChat(){
     this.subscription.unsubscribe('/topic/chat');
   }*/
 

@@ -17,7 +17,10 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   receiver: UserDto;
 
-  constructor(public messageService: MessageService) {
+  messageService: MessageService;
+
+  constructor() {
+    this.messageService = LoginFormComponent.messageService;
   }
 
   ngOnInit(): void {

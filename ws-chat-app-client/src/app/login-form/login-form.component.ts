@@ -14,7 +14,10 @@ export class LoginFormComponent implements OnInit{
 
   public static userConnectionDto: UserDto;
 
-  constructor(public messageService: MessageService) {
+  public static messageService: MessageService;
+
+  constructor() {
+    LoginFormComponent.messageService = new MessageService();
   }
 
   ngOnInit(): void {
@@ -23,7 +26,8 @@ export class LoginFormComponent implements OnInit{
   enterName(nameInput: HTMLInputElement){
     console.log('nameInput.value', nameInput.value)
     LoginFormComponent.userConnectionDto = new UserDto(nameInput.value);
-    this.messageService.sendUser(LoginFormComponent.userConnectionDto)
+    LoginFormComponent.messageService.subscribeUsersChat();
+    LoginFormComponent.messageService.sendUser(LoginFormComponent.userConnectionDto)
   }
 
 }

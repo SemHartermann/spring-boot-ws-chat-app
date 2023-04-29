@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
@@ -42,10 +43,9 @@ public class WebSocketController {
     }
 
     @MessageMapping("/send/chat")
-    public void sendChat(List<String> users, StompHeaderAccessor headers){
+    public void sendChat(List<String> users){
 
         System.out.println(users);
-        System.out.println(headers);
 
         List<ChatMessageDto> currentChat = new ArrayList<>();
 
@@ -57,23 +57,22 @@ public class WebSocketController {
             }
         }
         System.out.println(currentChat);
-        Optional<String> user = Optional.ofNullable(headers.getUser())
-                .map(Principal::getName);
-        System.out.println(user);
-        simpMessagingTemplate.convertAndSendToUser(String.valueOf(user),"/topic/chat", currentChat);
+        System.out.println("/topic/chat-" + users.get(0));
+        this.simpMessagingTemplate.convertAndSend("/topic/chat-" + users.get(0), currentChat);
+
     }
 
     @MessageMapping("/send/user")
-    @SendTo("/topic/users")
-    public List<User> sendUser(User newUser){
+    public /*List<User>*/ void sendUser(User newUser){
         for (User user : users) {
             if(user.getName().equals(newUser.getName())){
-                return users;
+                this.simpMessagingTemplate.convertAndSend("/topic/users", users);
             }
         }
         users.add(newUser);
         System.out.println(users);
-        return users;
+        /*return users;*/
+        this.simpMessagingTemplate.convertAndSend("/topic/users", users);
     }
 }
 
