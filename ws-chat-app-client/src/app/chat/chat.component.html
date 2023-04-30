@@ -30,8 +30,12 @@
         <div class="row-cols-1" style="margin-top: 40px">chat-list</div>
         <div class="row-cols-1 chat-list" ip="window">
           <ul class="list-group">
-            <li class="list-group-item" *ngFor="let user of messageService.users">
-              <span (click)="enterReceiver(user)">{{user.name}}</span>
+            <li type="button" class="list-group-item"
+                *ngFor="let user of messageService.users"
+                [ngClass]="{'list-group-item btn' : !(toggleUser==user.name),
+                            'list-group-item my-button' : toggleUser==user.name}">
+              <span (click)="enterReceiver(user);
+                              enableDisableRule(user.name)">{{user.name}}</span>
             </li>
           </ul>
         </div>
@@ -48,5 +52,4 @@
       </div>
     </form>
   </div>
-
 </main>

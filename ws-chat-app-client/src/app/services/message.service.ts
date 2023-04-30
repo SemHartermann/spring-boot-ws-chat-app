@@ -32,11 +32,7 @@ export class MessageService {
 
     this.stompClient.connect({}, (frame:any) => {
       console.log(frame);
-      this.stompClient.subscribe('/topic/message', (message: { body: any; }) => {
-        if (message.body) {
-          this.chatMessages.push(JSON.parse(message.body));
-        }
-      });
+
 
       this.stompClient.subscribe('/topic/users', (user: { body: any; }) => {
         if (user.body) {
@@ -61,10 +57,17 @@ export class MessageService {
     this.stompClient.send('/app/send/chat' , {username: LoginFormComponent.userConnectionDto.name}, JSON.stringify(usersMap));
   }
 
+  subscribeMessages(){
+    this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
+      if (message.body) {
+        this.chatMessages.push(JSON.parse(message.body));
+      }
+    });
+  }
+
   subscribeUsersChat(){
     this.stompClient.subscribe('/topic/chat'+"-"+LoginFormComponent.userConnectionDto.name, (chat: { body: any; },) => {
       if (chat.body) {
-        console.log("in chat handler")
         this.chatMessages = JSON.parse(chat.body);
       }
     });

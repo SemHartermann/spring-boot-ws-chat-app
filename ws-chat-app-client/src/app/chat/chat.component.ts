@@ -19,12 +19,16 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   messageService: MessageService;
 
+  toggleUser : String ;
+
   constructor() {
     this.messageService = LoginFormComponent.messageService;
   }
 
   ngOnInit(): void {
     this.userConnection = new UserDto(LoginFormComponent.userConnectionDto.name);
+
+    this.toggleUser="_";
 
     console.log(this.userConnection);
   }
@@ -51,4 +55,7 @@ export class ChatComponent implements OnInit, OnDestroy{
     console.log(this.receiver)
   }
 
+  enableDisableRule(buf: String) {
+    this.toggleUser = buf;
+  }
 }

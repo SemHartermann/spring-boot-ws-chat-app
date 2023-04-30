@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {WebSocketService} from "../services/web-socket.service";
 import {ChatMessageDto} from "../models/chatMessageDto";
 import { UserDto } from '../models/userDto';
 import {MessageService} from "../services/message.service";
@@ -27,6 +26,7 @@ export class LoginFormComponent implements OnInit{
     console.log('nameInput.value', nameInput.value)
     LoginFormComponent.userConnectionDto = new UserDto(nameInput.value);
     LoginFormComponent.messageService.subscribeUsersChat();
+    LoginFormComponent.messageService.subscribeMessages();
     LoginFormComponent.messageService.sendUser(LoginFormComponent.userConnectionDto)
   }
 

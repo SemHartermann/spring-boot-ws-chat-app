@@ -35,44 +35,44 @@ public class WebSocketController {
     }
 
     @MessageMapping("/send/message")
-    @SendTo("/topic/message")
-    public ChatMessageDto sendMessage(ChatMessageDto message){
+    public void sendMessage(ChatMessageDto message){
         chats.add(message);
         System.out.println(message);
-        return message;
+        this.simpMessagingTemplate.convertAndSend("/topic/message-" + message.getUser(), message);
+        this.simpMessagingTemplate.convertAndSend("/topic/message-" + message.getReceiver(), message);
     }
 
     @MessageMapping("/send/chat")
-    public void sendChat(List<String> users){
+    public void sendChat(List<String> usersChat){
 
-        System.out.println(users);
+        System.out.println(usersChat);
 
         List<ChatMessageDto> currentChat = new ArrayList<>();
 
         for (ChatMessageDto chat : chats) {
-            if ((chat.getUser().equals(users.get(0)) && chat.getReceiver().equals(users.get(1)))
-                    || (chat.getUser().equals(users.get(1)) && chat.getReceiver().equals(users.get(0)))){
+            if ((chat.getUser().equals(usersChat.get(0)) && chat.getReceiver().equals(usersChat.get(1)))
+                    || (chat.getUser().equals(usersChat.get(1)) && chat.getReceiver().equals(usersChat.get(0)))){
 
                 currentChat.add(chat);
             }
         }
         System.out.println(currentChat);
-        System.out.println("/topic/chat-" + users.get(0));
-        this.simpMessagingTemplate.convertAndSend("/topic/chat-" + users.get(0), currentChat);
+        System.out.println("/topic/chat-" + usersChat.get(0));
+        this.simpMessagingTemplate.convertAndSend("/topic/chat-" + usersChat.get(0), currentChat);
 
     }
 
     @MessageMapping("/send/user")
-    public /*List<User>*/ void sendUser(User newUser){
+    @SendTo("/topic/users")
+    public List<User>  sendUser(User newUser){
         for (User user : users) {
             if(user.getName().equals(newUser.getName())){
-                this.simpMessagingTemplate.convertAndSend("/topic/users", users);
+                return users;
             }
         }
         users.add(newUser);
         System.out.println(users);
-        /*return users;*/
-        this.simpMessagingTemplate.convertAndSend("/topic/users", users);
+        return users;
     }
 }
 

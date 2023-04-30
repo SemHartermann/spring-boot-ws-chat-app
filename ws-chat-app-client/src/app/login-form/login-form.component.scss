@@ -35,6 +35,8 @@
 }
 
 .btn {
+  background-color: #0d6efd;
+  color: #fff;
   margin-top: 1rem;
   display: inline-block;
   font-weight: 400;
@@ -51,7 +53,12 @@
   line-height: 1.5;
   border-radius: 0.25rem;
   width: 17.65rem;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn:hover {
+  color: #fff;
+  background-color: teal;
+  border-color: teal;
 }
 
 

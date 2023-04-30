@@ -2,6 +2,7 @@
   margin-top: 3rem;
 }
 
+
 div.chat-content {
   border-radius: .25rem;
   height: 30rem;
@@ -43,3 +44,20 @@ li{
   height: 100%;
   overflow-y: scroll;
 }
+
+.btn {
+  background-color: #fff;
+  color: black;
+  transition: all .7s;
+}
+.btn:hover {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.my-button {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
