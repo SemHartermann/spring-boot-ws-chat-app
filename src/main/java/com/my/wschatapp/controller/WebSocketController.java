@@ -39,7 +39,9 @@ public class WebSocketController {
         chats.add(message);
         System.out.println(message);
         this.simpMessagingTemplate.convertAndSend("/topic/message-" + message.getUser(), message);
-        this.simpMessagingTemplate.convertAndSend("/topic/message-" + message.getReceiver(), message);
+        if (!Objects.equals(message.getUser(), message.getReceiver())){
+            this.simpMessagingTemplate.convertAndSend("/topic/message-" + message.getReceiver(), message);
+        }
     }
 
     @MessageMapping("/send/chat")

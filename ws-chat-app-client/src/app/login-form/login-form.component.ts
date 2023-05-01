@@ -26,7 +26,6 @@ export class LoginFormComponent implements OnInit{
     console.log('nameInput.value', nameInput.value)
     LoginFormComponent.userConnectionDto = new UserDto(nameInput.value);
     LoginFormComponent.messageService.subscribeUsersChat();
-    LoginFormComponent.messageService.subscribeMessages();
     LoginFormComponent.messageService.sendUser(LoginFormComponent.userConnectionDto)
   }
 

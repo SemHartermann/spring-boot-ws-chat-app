@@ -15,7 +15,7 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   userConnection: UserDto;
 
-  receiver: UserDto;
+  public static receiver: UserDto;
 
   messageService: MessageService;
 
@@ -30,6 +30,10 @@ export class ChatComponent implements OnInit, OnDestroy{
 
     this.toggleUser="_";
 
+    ChatComponent.receiver = new UserDto("_");
+
+    LoginFormComponent.messageService.subscribeMessages();
+
     console.log(this.userConnection);
   }
 
@@ -40,19 +44,20 @@ export class ChatComponent implements OnInit, OnDestroy{
   }
 
   sendMessage(sendForm: NgForm) {
-    const chatMessageDto = new ChatMessageDto(this.userConnection.name, sendForm.value.message, this.receiver.name);
+    const chatMessageDto = new ChatMessageDto(this.userConnection.name, sendForm.value.message, ChatComponent.receiver.name);
     this.messageService.sendMessage(chatMessageDto);
     // @ts-ignore
     sendForm.controls.message.reset();
   };
 
   enterReceiver(user: UserDto){
-    this.receiver = user;
+    ChatComponent.receiver = user;
+    console.log(ChatComponent.receiver.name)
     let users: string[] = [];
     users.push(this.userConnection.name);
-    users.push(this.receiver.name);
+    users.push(ChatComponent.receiver.name);
     this.messageService.sendUsersChat(users);
-    console.log(this.receiver)
+    console.log(ChatComponent.receiver)
   }
 
   enableDisableRule(buf: String) {

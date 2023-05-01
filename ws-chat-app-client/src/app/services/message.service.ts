@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginFormComponent } from '../login-form/login-form.component';
 import {ChatMessageDto} from "../models/chatMessageDto";
 import {UserDto} from "../models/userDto";
+import {ChatComponent} from "../chat/chat.component";
 
 declare var SockJS: any
 
@@ -59,7 +60,8 @@ export class MessageService {
 
   subscribeMessages(){
     this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
-      if (message.body) {
+      if (message.body && (ChatComponent.receiver.name == JSON.parse(message.body).user
+        || LoginFormComponent.userConnectionDto.name == JSON.parse(message.body).user)) {
         this.chatMessages.push(JSON.parse(message.body));
       }
     });
