@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import {Routes, RouterModule} from "@angular/router";
+import { AdminComponent } from './admin/admin.component';
 
 const appRoutes: Routes = [
   {path: 'chat', component: ChatComponent},
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ChatComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
