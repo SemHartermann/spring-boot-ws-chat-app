@@ -2,18 +2,15 @@ package com.my.wschatapp.controller;
 
 import com.my.wschatapp.dto.ChatMessageDto;
 import com.my.wschatapp.dto.User;
+import com.my.wschatapp.utils.Utils;
+import org.slf4j.event.KeyValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.messaging.simp.config.ChannelRegistration;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 
-import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -28,12 +25,13 @@ public class WebSocketController {
 
     private List<ChatMessageDto> chats = new ArrayList<>();
 
+    private Map<String, String> userChats = new HashMap<>();
+
     @Autowired
     WebSocketController(SimpMessagingTemplate simpMessagingTemplate, SimpUserRegistry simpUserRegistry){
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.simpUserRegistry = simpUserRegistry;
     }
-
     @MessageMapping("/send/message")
     public void sendMessage(ChatMessageDto message){
         chats.add(message);
@@ -74,6 +72,19 @@ public class WebSocketController {
         }
         users.add(newUser);
         System.out.println(users);
+
+        System.out.println(Utils.C(users.size(), 2));
+        for (int i = 0; i < Utils.C(users.size(), 2); i++) {
+            for (int j = 0; j < users.size(); j++) {
+                userChats.put(users.get(i).getName(), users.get(j).getName());
+            }
+        }
+
+        System.out.println(userChats);
+
+        System.out.println("userChats");
+        this.simpMessagingTemplate.convertAndSend("/topic/users-admin", userChats);
+
         return users;
     }
 }

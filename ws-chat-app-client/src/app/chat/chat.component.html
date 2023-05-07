@@ -12,7 +12,10 @@
   </nav>
 </header>
 <main class="chat">
-  <div class="container">
+
+  <div *ngIf="userConnection.name!='admin'; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <div class="container">
     <div class="row">
       <div class="chat-content card col-8">
         <ul class="list-group list-group-flush">
@@ -25,8 +28,8 @@
       <div class="menu col">
         <div class="row-cols-1">User name</div>
         <div class="row-cols-1 username">
-            {{userConnection.name}}
-          </div>
+          {{userConnection.name}}
+        </div>
         <div class="row-cols-1" style="margin-top: 40px">chat-list</div>
         <div class="row-cols-1 chat-list" ip="window">
           <ul class="list-group">
@@ -52,4 +55,37 @@
       </div>
     </form>
   </div>
+  </ng-template>
+
+  <ng-template #elseBlock>
+    <div class="container">
+      <div class="row">
+        <div class="chat-content card col-8">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let chatMessage of messageService.chatMessages">
+              <strong>{{chatMessage.user}}: </strong>
+              <span>{{chatMessage.message}}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="menu col">
+          <div class="row-cols-1">User name</div>
+          <div class="row-cols-1 username">
+            {{userConnection.name}}
+          </div>
+          <div class="row-cols-1" style="margin-top: 40px">chat-list</div>
+          <div class="row-cols-1 chat-list" ip="window">
+            <ul class="list-group">
+              <li type="button" class="list-group-item"
+                  *ngFor="let usersPair of messageService.userNamePairs | keyvalue">
+              <span>{{usersPair.key}}<-->{{usersPair.value}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
 </main>

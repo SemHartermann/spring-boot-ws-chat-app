@@ -24,6 +24,10 @@ export class MessageService {
 
   users: UserDto[] = [];
 
+  userNames: string[] = [];
+
+  userNamePairs: Map<string, string>;
+
 
   initializeWebSocketConnection() {
     const serverUrl = 'http://localhost:8080/chat';
@@ -75,11 +79,16 @@ export class MessageService {
     });
   }
 
- /* unSubscribeUsersChat(){
-    this.subscription.unsubscribe('/topic/chat');
-  }*/
+  subscribeUsersAdmin(){
+    this.stompClient.subscribe('/topic/users'+"-"+LoginFormComponent.userConnectionDto.name, (userChats: { body: any; },) => {
+      if (userChats.body) {
+        this.userNamePairs = JSON.parse(userChats.body);
+      }
+    });
+  }
 
   /*sendDisconnected(user : UserDto){
     this.stompClient.send('/app/send/disconnected' , {}, JSON.stringify(user));
   }*/
+
 }
