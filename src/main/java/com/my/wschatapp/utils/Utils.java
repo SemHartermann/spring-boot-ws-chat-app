@@ -8,7 +8,7 @@ public class Utils {
     }
 
     public static int C(int n, int k) {
-        return fact(n) / fact(k) / fact(n - k);
+        return fact(n) / (fact(k) * fact(n - k));
     }
 
 }

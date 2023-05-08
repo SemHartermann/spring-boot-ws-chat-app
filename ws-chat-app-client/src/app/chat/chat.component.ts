@@ -60,6 +60,14 @@ export class ChatComponent implements OnInit, OnDestroy{
     console.log(ChatComponent.receiver)
   }
 
+  enterUsersChat(user: string, receiver: string){
+    let users: string[] = [];
+    users.push(user);
+    users.push(receiver);
+    this.messageService.sendUsersChatAdmin(users);
+    console.log(ChatComponent.receiver)
+  }
+
   enableDisableRule(buf: String) {
     this.toggleUser = buf;
   }

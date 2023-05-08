@@ -25,12 +25,9 @@ export class LoginFormComponent implements OnInit{
   enterName(nameInput: HTMLInputElement){
     console.log('nameInput.value', nameInput.value)
     LoginFormComponent.userConnectionDto = new UserDto(nameInput.value);
-    if (LoginFormComponent.userConnectionDto.name != "admin"){
-      LoginFormComponent.messageService.subscribeUsersChat();
-      LoginFormComponent.messageService.sendUser(LoginFormComponent.userConnectionDto)
-    }
     LoginFormComponent.messageService.subscribeUsersAdmin();
     LoginFormComponent.messageService.sendUser(LoginFormComponent.userConnectionDto)
+    LoginFormComponent.messageService.subscribeUsersChat();
   }
 
 }

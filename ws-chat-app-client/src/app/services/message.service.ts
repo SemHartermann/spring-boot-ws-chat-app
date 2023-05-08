@@ -26,7 +26,7 @@ export class MessageService {
 
   userNames: string[] = [];
 
-  userNamePairs: Map<string, string>;
+  userNamePairs: Map<string, string>[];
 
 
   initializeWebSocketConnection() {
@@ -60,6 +60,11 @@ export class MessageService {
   sendUsersChat(usersMap : string[]) {
     console.log(JSON.parse(JSON.stringify(usersMap)))
     this.stompClient.send('/app/send/chat' , {username: LoginFormComponent.userConnectionDto.name}, JSON.stringify(usersMap));
+  }
+
+  sendUsersChatAdmin(usersMap : string[]) {
+    console.log(JSON.parse(JSON.stringify(usersMap)))
+    this.stompClient.send('/app/send/chat/admin' , {username: LoginFormComponent.userConnectionDto.name}, JSON.stringify(usersMap));
   }
 
   subscribeMessages(){

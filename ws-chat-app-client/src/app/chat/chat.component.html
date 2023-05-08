@@ -77,8 +77,10 @@
           <div class="row-cols-1 chat-list" ip="window">
             <ul class="list-group">
               <li type="button" class="list-group-item"
-                  *ngFor="let usersPair of messageService.userNamePairs | keyvalue">
-              <span>{{usersPair.key}}<-->{{usersPair.value}}</span>
+                  *ngFor="let usersPair of messageService.userNamePairs">
+              <span *ngFor="let users of usersPair| keyvalue"
+                    (click)="enterUsersChat(users.key, users.value);
+                              enableDisableRule(users.value)">{{users.key}} <--> {{users.value}}</span>
               </li>
             </ul>
           </div>
