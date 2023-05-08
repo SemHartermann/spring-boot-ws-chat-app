@@ -69,9 +69,20 @@ export class MessageService {
 
   subscribeMessages(){
     this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
-      if (message.body && (ChatComponent.receiver.name == JSON.parse(message.body).user
-        || LoginFormComponent.userConnectionDto.name == JSON.parse(message.body).user)) {
-        this.chatMessages.push(JSON.parse(message.body));
+      if(LoginFormComponent.userConnectionDto.name=="admin"){
+        this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
+          if (message.body && ((ChatComponent.adminChat[0] == JSON.parse(message.body).user
+              && ChatComponent.adminChat[1] == JSON.parse(message.body).receiver)
+            ||(ChatComponent.adminChat[1] == JSON.parse(message.body).user
+              && ChatComponent.adminChat[0] == JSON.parse(message.body).receiver))) {
+            this.chatMessages.push(JSON.parse(message.body));
+          }
+        });
+      }else{
+        if (message.body && (ChatComponent.receiver.name == JSON.parse(message.body).user
+          || LoginFormComponent.userConnectionDto.name == JSON.parse(message.body).user)) {
+          this.chatMessages.push(JSON.parse(message.body));
+        }
       }
     });
   }

@@ -21,6 +21,8 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   toggleUser : String ;
 
+  public static adminChat: string[];
+
   constructor() {
     this.messageService = LoginFormComponent.messageService;
   }
@@ -64,6 +66,7 @@ export class ChatComponent implements OnInit, OnDestroy{
     let users: string[] = [];
     users.push(user);
     users.push(receiver);
+    ChatComponent.adminChat=users;
     this.messageService.sendUsersChatAdmin(users);
     console.log(ChatComponent.receiver)
   }
