@@ -79,8 +79,10 @@
               <li type="button" class="list-group-item"
                   *ngFor="let usersPair of messageService.userNamePairs">
               <span *ngFor="let users of usersPair| keyvalue"
+                    [ngClass]="{'list-group-item btn' : !(toggleUser==(users.key+users.value)),
+                            'list-group-item my-button' : toggleUser==(users.key+users.value)}"
                     (click)="enterUsersChat(users.key, users.value);
-                              enableDisableRule(users.value)">{{users.key}} <--> {{users.value}}</span>
+                              enableDisableRule(users.key+users.value)">{{users.key}} <--> {{users.value}}</span>
               </li>
             </ul>
           </div>

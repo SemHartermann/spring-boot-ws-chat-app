@@ -70,5 +70,6 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   enableDisableRule(buf: String) {
     this.toggleUser = buf;
+    console.log(this.toggleUser)
   }
 }
