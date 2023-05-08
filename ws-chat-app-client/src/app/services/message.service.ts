@@ -68,24 +68,26 @@ export class MessageService {
   }
 
   subscribeMessages(){
-    this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
       if(LoginFormComponent.userConnectionDto.name=="admin"){
+        console.log(LoginFormComponent.userConnectionDto.name)
         this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
           if (message.body && ((ChatComponent.adminChat[0] == JSON.parse(message.body).user
               && ChatComponent.adminChat[1] == JSON.parse(message.body).receiver)
             ||(ChatComponent.adminChat[1] == JSON.parse(message.body).user
               && ChatComponent.adminChat[0] == JSON.parse(message.body).receiver))) {
+
             this.chatMessages.push(JSON.parse(message.body));
+            console.log("admin message")
           }
         });
       }else{
+        this.stompClient.subscribe('/topic/message'+"-"+LoginFormComponent.userConnectionDto.name, (message: { body: any; }) => {
         if (message.body && (ChatComponent.receiver.name == JSON.parse(message.body).user
           || LoginFormComponent.userConnectionDto.name == JSON.parse(message.body).user)) {
           this.chatMessages.push(JSON.parse(message.body));
         }
-      }
-    });
-  }
+      });
+  }}
 
   subscribeUsersChat(){
     this.stompClient.subscribe('/topic/chat'+"-"+LoginFormComponent.userConnectionDto.name, (chat: { body: any; },) => {

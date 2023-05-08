@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit, OnDestroy{
 
   constructor() {
     this.messageService = LoginFormComponent.messageService;
+    this.messageService.subscribeMessages();
   }
 
   ngOnInit(): void {
@@ -33,8 +34,6 @@ export class ChatComponent implements OnInit, OnDestroy{
     this.toggleUser="_";
 
     ChatComponent.receiver = new UserDto("_");
-
-    LoginFormComponent.messageService.subscribeMessages();
 
     console.log(this.userConnection);
   }
