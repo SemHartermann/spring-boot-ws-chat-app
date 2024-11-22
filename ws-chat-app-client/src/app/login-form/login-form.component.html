@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Signin Template for Bootstrap</title>
+  <title>Signin Template for Bootstrap</title>
 </head>
 
 <body>
 
 <div class="container">
   <form class="form-signin">
-    <h1>Connection</h1>
-    <input type="text" name="ip" ip="input-ip" ngModel class="form-control" placeholder="IP Address" required autofocus>
+    <h1>Sign in</h1>
     <input type="text"  name="message" ip="input-message" ngModel class="form-control" placeholder="Username" #nameInput required>
     <button (click)="enterName(nameInput)" routerLink="/chat" class="btn btn-lg btn-primary btn-block" type="submit">
       Connect
