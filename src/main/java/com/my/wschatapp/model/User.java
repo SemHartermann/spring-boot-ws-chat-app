@@ -1,7 +1,4 @@
-package com.my.wschatapp.dto;
-
-import java.security.Principal;
-import java.util.List;
+package com.my.wschatapp.model;
 
 public class User {
 

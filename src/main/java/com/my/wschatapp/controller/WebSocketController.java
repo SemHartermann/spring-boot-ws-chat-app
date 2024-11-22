@@ -1,9 +1,8 @@
 package com.my.wschatapp.controller;
 
 import com.my.wschatapp.dto.ChatMessageDto;
-import com.my.wschatapp.dto.User;
+import com.my.wschatapp.model.User;
 import com.my.wschatapp.utils.Utils;
-import org.slf4j.event.KeyValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

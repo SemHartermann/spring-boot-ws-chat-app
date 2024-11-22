@@ -1,4 +1,6 @@
-package com.my.wschatapp.dto;
+package com.my.wschatapp.model;
+
+import com.my.wschatapp.dto.ChatMessageDto;
 
 import java.util.List;
 import java.util.Map;
