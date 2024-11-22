@@ -1,11 +1,12 @@
 .chat {
   margin-top: 3rem;
+  font-family: "Georgia", serif;
 }
 
 
 div.chat-content {
   border-radius: .25rem;
-  height: 30rem;
+  height: 18rem;
   margin-bottom: 2rem;
 }
 
@@ -18,7 +19,7 @@ div.menu {
 .chat-list {
   border-radius: .25rem;
   border: 1px solid #ced4da;
-  height: 23rem;
+  height: 11rem;
   width: auto;
   align-items: center;
   margin-right: auto;
@@ -37,7 +38,7 @@ div.menu {
 }
 
 li{
- list-style-type: none;
+  list-style-type: none;
 }
 
 .card {
@@ -45,19 +46,39 @@ li{
   overflow-y: scroll;
 }
 
+.btnn {
+  background-color: #fff;
+  color: black;
+  transition: all .7s;
+}
 .btn {
   background-color: #fff;
   color: black;
   transition: all .7s;
 }
+
+.btnSend {
+  background-color: #fff;
+  color: black;
+  transition: all .7s;
+  border-color: #e75050;
+}
+
 .btn:hover {
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #e75050;
+  border-color: #e75050;
 }
 .my-button {
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #e75050;
+  border-color: #e75050;
 }
 
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
